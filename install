@@ -5,7 +5,7 @@ export CODEBUILD=true
 
 export CODEBUILD_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)
 
-# export CODEBUILD_GIT_BRANCH="$(git symbolic-ref HEAD --short 2>/dev/null)"
+export CODEBUILD_GIT_BRANCH="$(git symbolic-ref)"
 # if [ "$CODEBUILD_GIT_BRANCH" = "" ] ; then
 #   CODEBUILD_GIT_BRANCH="$(git branch -a --contains HEAD | sed -n 2p | awk '{ printf $1 }')";
 #   export CODEBUILD_GIT_BRANCH=${CODEBUILD_GIT_BRANCH#remotes/origin/};
@@ -33,7 +33,7 @@ echo "==> AWS CodeBuild Extra Environment Variables:"
 echo "==> CI = $CI"
 echo "==> CODEBUILD = $CODEBUILD"
 echo "==> CODEBUILD_ACCOUNT_ID = $CODEBUILD_ACCOUNT_ID"
-echo "==> CODEBUILD_SOURCE_VERSION = $CODEBUILD_SOURCE_VERSION"
+echo "==> CODEBUILD_GIT_BRANCH = $CODEBUILD_GIT_BRANCH"
 echo "==> CODEBUILD_WEBHOOK_HEAD_REF = $CODEBUILD_WEBHOOK_HEAD_REF"
 
 # echo "==> CODEBUILD_GIT_AUTHOR = $CODEBUILD_GIT_AUTHOR"
