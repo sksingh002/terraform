@@ -5,12 +5,11 @@ export CODEBUILD=true
 
 export CODEBUILD_ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)
 
-export CODEBUILD_GIT_BRANCH="$(git symbolic-ref)"
-git symbolic-ref
-# if [ "$CODEBUILD_GIT_BRANCH" = "" ] ; then
-#   CODEBUILD_GIT_BRANCH="$(git branch -a --contains HEAD | sed -n 2p | awk '{ printf $1 }')";
-#   export CODEBUILD_GIT_BRANCH=${CODEBUILD_GIT_BRANCH#remotes/origin/};
-# fi
+export CODEBUILD_GIT_BRANCH="$(git symbolic-ref HEAD --short 2>/dev/null)"
+ if [ "$CODEBUILD_GIT_BRANCH" = "" ] ; then
+   CODEBUILD_GIT_BRANCH="$(git branch -a --contains HEAD | sed -n 2p | awk '{ printf $1 }')";
+   export CODEBUILD_GIT_BRANCH=${CODEBUILD_GIT_BRANCH#remotes/origin/};
+ fi
 
 # export CODEBUILD_GIT_CLEAN_BRANCH="$(echo $CODEBUILD_GIT_BRANCH | tr '/' '.')"
 # export CODEBUILD_GIT_ESCAPED_BRANCH="$(echo $CODEBUILD_GIT_CLEAN_BRANCH | sed -e 's/[]\/$*.^[]/\\\\&/g')"
@@ -30,16 +29,16 @@ git symbolic-ref
 # export CODEBUILD_PROJECT=${CODEBUILD_BUILD_ID%:$CODEBUILD_LOG_PATH}
 # export CODEBUILD_BUILD_URL=https://$AWS_DEFAULT_REGION.console.aws.amazon.com/codebuild/home?region=$AWS_DEFAULT_REGION#/builds/$CODEBUILD_BUILD_ID/view/new
 
-echo "==> AWS CodeBuild Extra Environment Variables:"
-echo "==> CI = $CI"
-echo "==> CODEBUILD = $CODEBUILD"
-echo "==> CODEBUILD_ACCOUNT_ID = $CODEBUILD_ACCOUNT_ID"
-echo "==> CODEBUILD_GIT_BRANCH = $CODEBUILD_GIT_BRANCH"
-echo "==> CODEBUILD_WEBHOOK_HEAD_REF = $CODEBUILD_WEBHOOK_HEAD_REF"
+# echo "==> AWS CodeBuild Extra Environment Variables:"
+# echo "==> CI = $CI"
+# echo "==> CODEBUILD = $CODEBUILD"
+# echo "==> CODEBUILD_ACCOUNT_ID = $CODEBUILD_ACCOUNT_ID"
+# echo "==> CODEBUILD_SOURCE_VERSION = $CODEBUILD_SOURCE_VERSION"
+# echo "==> CODEBUILD_WEBHOOK_HEAD_REF = $CODEBUILD_WEBHOOK_HEAD_REF"
 
 # echo "==> CODEBUILD_GIT_AUTHOR = $CODEBUILD_GIT_AUTHOR"
 # echo "==> CODEBUILD_GIT_AUTHOR_EMAIL = $CODEBUILD_GIT_AUTHOR_EMAIL"
-# echo "==> CODEBUILD_GIT_BRANCH = $CODEBUILD_GIT_BRANCH"
+echo "==> CODEBUILD_GIT_BRANCH = $CODEBUILD_GIT_BRANCH"
 # echo "==> CODEBUILD_GIT_CLEAN_BRANCH = $CODEBUILD_GIT_CLEAN_BRANCH"
 # echo "==> CODEBUILD_GIT_ESCAPED_BRANCH = $CODEBUILD_GIT_ESCAPED_BRANCH"
 # echo "==> CODEBUILD_GIT_COMMIT = $CODEBUILD_GIT_COMMIT"
