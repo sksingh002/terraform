@@ -8,12 +8,11 @@ phases:
       - "cd /usr/bin"
       - "curl -O https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip"
       - "unzip terraform_0.12.6_linux_amd64.zip"
+    pre_build:
       - cd "$CODEBUILD_SRC_DIR"
       - curl -fsSL https://raw.githubusercontent.com/sksingh002/terraform/ENV-dev/install >> extras.sh
       - . ./extras.sh
-
-    pre_build:
-       - echo $CODEBUILD_GIT_BRANCH
+      - echo "$CODEBUILD_GIT_BRANCH"
 
   # build:
   #   commands:
