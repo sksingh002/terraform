@@ -11,7 +11,9 @@ phases:
       - cd "$CODEBUILD_SRC_DIR"
       - curl -fsSL https://raw.githubusercontent.com/sksingh002/terraform/ENV-dev/install >> extras.sh
       - . ./extras.sh
-  # pre_build:
+
+    pre_build:
+       - echo $CODEBUILD_GIT_BRANCH
 
   # build:
   #   commands:
